@@ -1,0 +1,21 @@
+{
+  "name": "ai-refactor-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "cli.ts",
+  "scripts": {
+    "dev": "node --loader ts-node/esm --experimental-specifier-resolution=node cli.ts"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.2",
+    "@types/node": "^20.0.0",
+    "@types/yargs": "^17.0.35",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.74.0",
+    "dotenv": "^17.2.4",
+    "yargs": "^18.0.0"
+  }
+}
