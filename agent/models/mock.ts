@@ -4,15 +4,17 @@ export class MockModel {
   iteration = 0;
 
   async call(messages: any[]): Promise<ModelResponse> {
-    this.iteration++;
+    const iter = this.iteration;
 
-    if (this.iteration === 1) {
+    if (iter === 0) {
+      this.iteration++;
       return {
         tool_use: { name: "read_file", args: { path: "math.ts" } }
       };
     }
 
-    if (this.iteration === 2) {
+    if (iter === 1) {
+      this.iteration++;
       return {
         tool_use: {
           name: "write_file",
@@ -21,7 +23,8 @@ export class MockModel {
       };
     }
 
-    if (this.iteration === 3) {
+    if (iter === 2) {
+      this.iteration++;
       return {
         tool_use: { name: "run_tests", args: {} },
         stop_reason: "tests_passed"

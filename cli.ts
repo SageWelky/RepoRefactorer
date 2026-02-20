@@ -3,7 +3,6 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { setRootDir, ROOT_DIR, resolvePath } from "./mcp/server.js";
 import { rollback } from "./mcp/tools.js";
-import { Agent } from "./agent/agent.js";
 import { runAgent } from "./agent/loop.js";
 import { MockModel } from "./agent/models/mock.js";
 import { AnthropicModel } from "./agent/models/anthropic.js";
@@ -23,6 +22,7 @@ const argv = yargs(hideBin(process.argv))
   .option("rollback", { type: "boolean", default: false })
   .parseSync() as CLIArgs;
 
+// Run the higher-level `runAgent` which seeds the initial prompt/messages.
 await runAgent(argv.model, { preview: argv.preview });
 
 const modelChoice = argv.model;
@@ -68,25 +68,4 @@ if (argv.preview) {
   });
 }
 
-// Run agent loop
-(async () => {
-  try {
-    const agent = new Agent(model);
-    const success = await agent.run();
-
-    if (!success && argv.rollback && !argv.preview) {
-      console.log("⚠️ Tests failed. Rolling back changes...");
-      rollback.restoreAll();
-      console.log("✅ Rollback complete.");
-    }
-
-    if (success) console.log("🎉 Agent completed successfully.");
-    else console.log("❌ Agent failed.");
-  } catch (err) {
-    console.error("❌ Uncaught error in agent:", err);
-    if (argv.rollback && !argv.preview) {
-      console.log("⚠️ Rolling back due to uncaught error...");
-      rollback.restoreAll();
-    }
-  }
-})();
+// Agent loop handled by `runAgent` above.

@@ -25,8 +25,8 @@ export class Agent {
     let stop = false;
 
     while (!stop && this.iteration < maxIterations) {
-      this.iteration++;
-      console.log(`=== Iteration ${this.iteration} ===`);
+
+      console.log(`=== Iteration ${this.iteration + 1} ===`);
 
       // Call model with messages
       const response = await this.model.call(messages);
@@ -63,6 +63,8 @@ export class Agent {
 
       // If nothing was done, stop early
       if (!toolUsed) stop = true;
+
+      this.iteration++;
     }
 
     return stop;

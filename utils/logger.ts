@@ -1,6 +1,6 @@
 export class Logger {
   iteration(n: number) {
-    console.log(`\n=== Iteration ${n + 1} ===`);
+    console.log(`\n=== Iteration ${n} ===`);
   }
 
   toolCall(name: string) {
